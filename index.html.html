@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="meta-title">CSSTools.io - Free Online CSS Generators, Tools & Modern Tutorials</title>
+<meta id="meta-desc" name="description" content="Explore browser-based CSS tools, fluid typography clamp calculators, gradient generators, box shadows, glassmorphism builders, and performance optimization guides.">
+
+<!-- Open Graph / Social Sharing Meta Tags -->
+<meta property="og:title" content="CSSTools.io - Free Online CSS Generators & Tools Hub">
+<meta property="og:description" content="Boost your front-end workflow with high-performance CSS generators, clamp calculators, and modern layout guides.">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSSTools.io - CSS Generators & Tools">
+<meta name="twitter:description" content="Free browser-based CSS generators, fluid typography calculators, and developer tools.">
+<link rel="icon"  href="fluidtype-icon.svg">
+<style>
+  :root {
+    --bg-main: #07090e;
+    --bg-sidebar: #0b0f17;
+    --card: #111827;
+    --card-hover: #1f2937;
+    --text: #f3f4f6;
+    --text-muted: #9ca3af;
+    --accent: #ec4899;
+    --accent-hover: #db2777;
+    --border: #1f2937;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg-main);
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar Navigation Layout (Desktop Default) */
+  aside {
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .logo-area {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    margin-bottom: 0.25rem;
+    cursor: pointer;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    background: var(--card);
+    color: white;
+  }
+
+  .nav-link span { font-size: 1.1rem; }
+
+  /* Mobile Header Bar */
+  .mobile-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--bg-sidebar);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 90;
+  }
+
+  .menu-toggle-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: white;
+    font-size: 1.25rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 95;
+  }
+
+  /* Main Workspace */
+  main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 3rem;
+    max-width: calc(100vw - 260px);
+    overflow-y: auto;
+  }
+
+  .header-title {
+    margin-top: 0;
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle {
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Grid Layouts */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .tool-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .tool-card:hover {
+    background: var(--card-hover);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.1);
+  }
+
+  .tool-card-preview {
+    height: 160px;
+    background: #030712;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .tool-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .tool-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-card-title {
+    font-size: 1.15rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    color: white;
+    line-height: 1.4;
+  }
+
+  .tool-card-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .read-more {
+    margin-top: auto;
+    font-size: 0.875rem;
+    color: var(--accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  /* Tool Specific Workspaces */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card {
+    background: var(--card);
+    padding: 1.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .full-width { grid-column: 1 / -1; }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+  }
+
+  label {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    color: #e5e7eb;
+    font-weight: 500;
+  }
+
+  input, select, textarea {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .result-box {
+    background: #030712;
+    padding: 1.25rem;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    position: relative;
+    word-break: break-all;
+    margin-top: 0.5rem;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.75rem;
+    transition: background 0.2s;
+  }
+
+  .copy-btn:hover { background: var(--accent-hover); }
+
+  .preview-area {
+    text-align: center;
+    border: 1px dashed var(--border);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  #preview-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+  }
+
+  #preview-logo {
+    display: none;
+    background: var(--accent);
+    color: white;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    aspect-ratio: 16 / 9;
+  }
+
+  .slider-group {
+    width: 100%;
+    text-align: left;
+  }
+
+  .slider-group input {
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+
+  .tool-view { display: none; }
+  .tool-view.active { display: block; }
+
+  /* Responsive Rules for Mobile & Desktop */
+  @media (max-width: 1024px) {
+    aside {
+      transform: translateX(-100%);
+    }
+    aside.open {
+      transform: translateX(0);
+    }
+    .mobile-header {
+      display: flex;
+    }
+    main {
+      margin-left: 0;
+      max-width: 100%;
+      padding: 5rem 1.25rem 2rem 1.25rem;
+    }
+    .tools-grid {
+      grid-template-columns: 1fr;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .sidebar-backdrop.active {
+      display: block;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Mobile Header Bar -->
+<header class="mobile-header">
+  <div class="logo-area" onclick="switchTool('tools-hub', document.getElementById('nav-hub'))" style="margin:0; font-size:1.1rem;">⚡ CSSTools.io</div>
+  <button class="menu-toggle-btn" onclick="toggleSidebar()">☰ Menu</button>
+</header>
+
+<div class="sidebar-backdrop" id="backdrop" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar Navigation -->
+<aside id="sidebar">
+  <div class="logo-area" onclick="switchTool('tools-hub', document.getElementById('nav-hub'))">⚡ CSSTools.io</div>
+  
+  <div class="nav-section-title">Navigation</div>
+  <a id="nav-hub" class="nav-link active" onclick="switchTool('tools-hub', this)"><span>🛠️</span> All Tutorials Hub</a>
+
+  <div class="nav-section-title">Generators & Tools</div>
+  <a class="nav-link" onclick="switchTool('fluid-typography', this)"><span>Aa</span> Fluid Typography</a>
+  <a class="nav-link" onclick="switchTool('gradient', this)"><span>◈</span> Gradient Generator</a>
+  <a class="nav-link" onclick="switchTool('box-shadow', this)"><span>▣</span> Box Shadow</a>
+  <a class="nav-link" onclick="switchTool('glassmorphism', this)"><span>◻</span> Glassmorphism</a>
+  <a class="nav-link" onclick="switchTool('scss-css', this)"><span>↔</span> SCSS ↔ CSS</a>
+  <a class="nav-link" onclick="switchTool('validator', this)"><span>✓</span> CSS Validator</a>
+  <a class="nav-link" onclick="switchTool('tailwind-css', this)"><span>⇢</span> Tailwind → CSS</a>
+  <a class="nav-link" onclick="switchTool('minifier', this)"><span>⚡</span> Minifier & Formatter</a>
+
+  <div class="nav-section-title" style="margin-top:auto;">Resources</div>
+  <a class="nav-link" onclick="switchTool('gradient-collection', this)"><span>🎨</span> Gradient Collection</a>
+  <a class="nav-link" onclick="switchTool('blog', this)"><span>📝</span> Blog & SEO</a>
+  <a class="nav-link" onclick="switchTool('privacy', this)"><span>🔒</span> Privacy Policy</a>
+  <a class="nav-link" onclick="switchTool('sitemap', this)"><span>🗺</span> Sitemap</a>
+</aside>
+
+<!-- Main Workspace Content -->
+<main>
+  
+  <!-- 1. Tutorials Hub & Articles Feed -->
+  <div id="view-tools-hub" class="tool-view active" data-title="CSSTools.io - Free Online CSS Generators, Tools & Modern Tutorials" data-desc="Explore browser-based CSS tools, fluid typography clamp calculators, gradient generators, box shadows, glassmorphism builders, and performance optimization guides.">
+    <h1 class="header-title">CSS Tips, Tutorials & Guides</h1>
+    <p class="subtitle">Practical articles to help you master modern CSS — from gradients and shadows to layout techniques and design trends.</p>
+
+    <div class="tools-grid">
+      
+      <!-- Article Card 1 -->
+      <div class="tool-card" onclick="switchTool('fluid-typography', null)">
+        <div class="tool-card-preview" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%);">
+          <code style="color:#ec4899;">clamp(1rem, 2.5vw, 3rem)</code>
+        </div>
+        <div class="tool-card-body">
+          <div class="tool-card-meta"><span>Tutorial</span><span>July 2026</span></div>
+          <div class="tool-card-title">CSS Fluid Typography & Clamp Calculator</div>
+          <div class="tool-card-desc">Generate smooth scaling font-sizes and element widths eliminating rigid media query breakpoints.</div>
+          <div class="read-more">10 min read →</div>
+        </div>
+      </div>
+
+      <!-- Article Card 2 -->
+      <div class="tool-card" onclick="switchTool('gradient-collection', null)">
+        <div class="tool-card-preview" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);">
+          <span style="color:white; font-weight:bold;">Linear, Radial & Conic</span>
+        </div>
+        <div class="tool-card-body">
+          <div class="tool-card-meta"><span>Guide</span><span>June 2026</span></div>
+          <div class="tool-card-title">Mastering CSS Gradients: Complete Guide</div>
+          <div class="tool-card-desc">Learn how to create multi-stop linear color transitions and modern conic color palettes.</div>
+          <div class="read-more">16 min read →</div>
+        </div>
+      </div>
+
+      <!-- Article Card 3 -->
+      <div class="tool-card" onclick="switchTool('box-shadow', null)">
+        <div class="tool-card-preview" style="box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); background:#111827; width:80px; height:40px; border-radius:6px; border:1px solid #374151;"></div>
+        <div class="tool-card-body">
+          <div class="tool-card-meta"><span>Tutorial</span><span>May 2026</span></div>
+          <div class="tool-card-title">Advanced Box Shadow Techniques for Modern UI</div>
+          <div class="tool-card-desc">Go beyond basic shadows. Learn how to layer multiple depths to create realistic depth effects.</div>
+          <div class="read-more">12 min read →</div>
+        </div>
+      </div>
+
+      <!-- Article Card 4 -->
+      <div class="tool-card" onclick="switchTool('glassmorphism', null)">
+        <div class="tool-card-preview" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); width: 120px; height: 60px; border-radius: 8px;"></div>
+        <div class="tool-card-body">
+          <div class="tool-card-meta"><span>Guide</span><span>May 2026</span></div>
+          <div class="tool-card-title">The Complete Glassmorphism CSS Guide</div>
+          <div class="tool-card-desc">Everything you need to know about frosted glass UI trends with backdrop-filter utilities.</div>
+          <div class="read-more">14 min read →</div>
+        </div>
+      </div>
+
+      <!-- Article Card 5 -->
+      <div class="tool-card" onclick="switchTool('minifier', null)">
+        <div class="tool-card-preview" style="color:#10b981; font-size:1.1rem;">
+          <code>.btn{padding:10px;}</code>
+        </div>
+        <div class="tool-card-body">
+          <div class="tool-card-meta"><span>Tips & Tricks</span><span>April 2026</span></div>
+          <div class="tool-card-title">Optimizing CSS Delivery & Performance</div>
+          <div class="tool-card-desc">Learn how stripping unused rules and minifying payloads boosts PageSpeed Core Web Vitals scores.</div>
+          <div class="read-more">8 min read →</div>
+        </div>
+      </div>
+
+      <!-- Article Card 6 -->
+      <div class="tool-card" onclick="switchTool('blog', null)">
+        <div class="tool-card-preview" style="background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);">
+          <span style="color:white; font-weight:bold;">2026 UI Design Trends</span>
+        </div>
+        <div class="tool-card-body">
+          <div class="tool-card-meta"><span>Trends</span><span>March 2026</span></div>
+          <div class="tool-card-title">CSS & UI Design Trends to Watch in 2026</div>
+          <div class="tool-card-desc">Explore scroll-driven animations and CSS container queries shaping modern web architecture.</div>
+          <div class="read-more">11 min read →</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. Fluid Typography Interactive Tool View -->
+  <div id="view-fluid-typography" class="tool-view" data-title="CSS Clamp Calculator & Fluid Typography Generator - CSSTools.io" data-desc="Free online CSS clamp calculator for fluid typography, responsive font sizes, and container widths. Generate production-ready CSS and Tailwind code instantly.">
+    <h1 class="header-title">Fluid Typography & Clamp Calculator</h1>
+    <p class="subtitle">Generate smooth clamp() functions scaling seamlessly between custom viewports.</p>
+
+    <div class="grid">
+      <div class="card full-width">
+        <div class="input-group" style="margin-bottom: 0;">
+          <label>CSS Property Target</label>
+          <select id="css-property">
+            <option value="font-size">font-size (Typography)</option>
+            <option value="width">width (Logo / Element Sizing)</option>
+            <option value="height">height</option>
+            <option value="padding">padding / margin</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top: 0; font-size: 1rem; color: #fff;">Viewport Range (px)</h3>
+        <div class="input-group">
+          <label>Minimum Viewport (Mobile)</label>
+          <input type="number" id="min-vw" value="320">
+        </div>
+        <div class="input-group">
+          <label>Maximum Viewport (Desktop)</label>
+          <input type="number" id="max-vw" value="1200">
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3 id="size-label" style="margin-top: 0; font-size: 1rem; color: #fff;">Value Constraints (px)</h3>
+        <div class="input-group">
+          <label>Minimum Size</label>
+          <input type="number" id="min-font" value="16">
+        </div>
+        <div class="input-group">
+          <label>Maximum Size</label>
+          <input type="number" id="max-font" value="48">
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <label>Vanilla CSS Output</label>
+        <div class="result-box">
+          <span id="output-css">font-size: clamp(...);</span>
+          <button class="copy-btn" onclick="copyCode('output-css', this)">Copy</button>
+        </div>
+      </div>
+      <div class="card">
+        <label>Tailwind theme.extend Data</label>
+        <div class="result-box">
+          <span id="output-tw">fluid: 'clamp(...)'</span>
+          <button class="copy-btn" onclick="copyCode('output-tw', this)">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-area">
+      <div id="preview-text">The quick brown fox jumps over the lazy dog.</div>
+      <div id="preview-logo">LOGO</div>
+      
+      <div class="slider-group">
+        <label>Simulate Viewport Width: <span id="current-vw" style="color: white; font-weight: bold;">760px</span></label>
+        <input type="range" id="vw-slider" min="320" max="1500" value="760">
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Generic Tool Workspace -->
+  <div id="view-generic" class="tool-view" data-title="CSS Developer Tool Workspace - CSSTools.io" data-desc="Interactive online CSS generator tool workspace designed for web developers.">
+    <h1 id="generic-title" class="header-title">Tool Workspace</h1>
+    <p class="subtitle">Interactive generator module loaded locally in your browser workspace.</p>
+    
+    <div class="card">
+      <div class="input-group">
+        <label>Input Code / Configuration</label>
+        <textarea id="generic-input" rows="6" placeholder="Paste your code or tweak parameters here..."></textarea>
+      </div>
+      <button onclick="alert('Module action executed successfully locally!')" style="background:var(--accent); color:white; border:none; padding:0.75rem 1.5rem; border-radius:8px; cursor:pointer; font-weight:bold;">Process Code</button>
+    </div>
+  </div>
+
+  <!-- 4. Gradient Collection Resource View -->
+  <div id="view-gradient-collection" class="tool-view" data-title="Curated CSS Gradient Collection & Backgrounds - CSSTools.io" data-desc="Explore 50+ hand-picked CSS gradients ready to use in your web projects with instant copyable linear-gradient code snippets.">
+    <h1 class="header-title">Curated Gradient Collection</h1>
+    <p class="subtitle">Ready-to-use color combinations for backgrounds, cards, and buttons.</p>
+    
+    <div class="tools-grid">
+      <div class="card" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); height: 200px; display:flex; flex-direction:column; justify-content:flex-end;">
+        <h3 style="color:white; margin:0 0 0.25rem 0;">Neon Twilight</h3>
+        <p style="color:#e0e7ff; font-size:0.8rem; margin:0; font-family:monospace;">linear-gradient(135deg, #6366f1 0%, #a855f7 100%)</p>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); height: 200px; display:flex; flex-direction:column; justify-content:flex-end;">
+        <h3 style="color:white; margin:0 0 0.25rem 0;">Ocean Mint</h3>
+        <p style="color:#ecfdf5; font-size:0.8rem; margin:0; font-family:monospace;">linear-gradient(135deg, #3b82f6 0%, #10b981 100%)</p>
+      </div>
+      <div class="card" style="background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); height: 200px; display:flex; flex-direction:column; justify-content:flex-end;">
+        <h3 style="color:white; margin:0 0 0.25rem 0;">Sunset Blaze</h3>
+        <p style="color:#fff7ed; font-size:0.8rem; margin:0; font-family:monospace;">linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Blog & SEO Resource View -->
+  <div id="view-blog" class="tool-view" data-title="CSS Performance Optimization Guides & Blog - CSSTools.io" data-desc="Read actionable guides on optimizing CSS delivery, reducing layout shifts, and mastering Core Web Vitals for front-end developers.">
+    <h1 class="header-title">Blog & CSS Performance SEO</h1>
+    <p class="subtitle">Actionable guides on optimizing stylesheets, reducing layout shifts, and page speed architecture.</p>
+    
+    <div class="grid">
+      <div class="card">
+        <h3 style="margin-top:0; color:#fff;">Optimizing CSS Delivery for Core Web Vitals</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.5;">Learn how stripping unused CSS rules and preloading critical hero media assets can significantly boost PageSpeed scores.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0; color:#fff;">Mastering Fluid Clamp() Layouts</h3>
+        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.5;">Eliminate rigid media queries by calculating mathematically robust scale transitions for headings and responsive logotypes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Privacy Policy & Sitemap View -->
+  <div id="view-privacy" class="tool-view" data-title="Privacy Policy - CSSTools.io" data-desc="All calculations run locally in your browser memory with zero tracking.">
+    <h1 class="header-title">Privacy Policy</h1>
+    <p class="subtitle">All calculations run locally in your browser memory.</p>
+    <div class="card">
+      <p style="color:var(--text-muted); line-height:1.6; margin:0;">CSSTools.io respects your privacy. No source inputs, calculations, or clipboard operations are tracked, stored, or transmitted to any external servers.</p>
+    </div>
+  </div>
+
+  <div id="view-sitemap" class="tool-view" data-title="Site Directory & Sitemap - CSSTools.io" data-desc="Quick index of all internal tools and resources available on CSSTools.io.">
+    <h1 class="header-title">Site Directory & Sitemap</h1>
+    <p class="subtitle">Quick index of all internal tools and resources.</p>
+    <div class="card">
+      <ul style="color:var(--text-muted); line-height:2.2; margin:0; padding-left:1.2rem;">
+        <li><a style="color:var(--accent); cursor:pointer; text-decoration:none;" onclick="switchTool('tools-hub', document.getElementById('nav-hub'))">All Tutorials Hub</a></li>
+        <li><a style="color:var(--accent); cursor:pointer; text-decoration:none;" onclick="switchTool('fluid-typography', null)">Fluid Typography Calculator</a></li>
+        <li><a style="color:var(--accent); cursor:pointer; text-decoration:none;" onclick="switchTool('gradient', null)">Gradient Generator</a></li>
+        <li><a style="color:var(--accent); cursor:pointer; text-decoration:none;" onclick="switchTool('box-shadow', null)">Box Shadow Generator</a></li>
+        <li><a style="color:var(--accent); cursor:pointer; text-decoration:none;" onclick="switchTool('glassmorphism', null)">Glassmorphism Builder</a></li>
+        <li><a style="color:var(--accent); cursor:pointer; text-decoration:none;" onclick="switchTool('blog', null)">Blog & SEO Guides</a></li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('backdrop');
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('active');
+  }
+
+  function switchTool(toolId, element) {
+    if (element) {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      element.classList.add('active');
+    } else {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('onclick') && link.getAttribute('onclick').includes(toolId)) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    document.querySelectorAll('.tool-view').forEach(view => view.classList.remove('active'));
+
+    let targetView;
+    if (toolId === 'tools-hub') {
+      targetView = document.getElementById('view-tools-hub');
+    } else if (toolId === 'fluid-typography') {
+      targetView = document.getElementById('view-fluid-typography');
+    } else if (toolId === 'gradient-collection') {
+      targetView = document.getElementById('view-gradient-collection');
+    } else if (toolId === 'blog') {
+      targetView = document.getElementById('view-blog');
+    } else if (toolId === 'privacy') {
+      targetView = document.getElementById('view-privacy');
+    } else if (toolId === 'sitemap') {
+      targetView = document.getElementById('view-sitemap');
+    } else {
+      targetView = document.getElementById('view-generic');
+      let title = toolId.replace('-', ' ').toUpperCase();
+      if (element && element.textContent) {
+        title = element.textContent.replace(/[◈▣◻↔✓Aa⇢⚡🎨📝🔒🗺]/g, '').trim();
+      }
+      document.getElementById('generic-title').innerText = title;
+      targetView.setAttribute('data-title', `${title} - CSSTools.io`);
+      targetView.setAttribute('data-desc', `Free browser-based ${title.toLowerCase()} tool for modern web developers.`);
+    }
+
+    targetView.classList.add('active');
+
+    // Dynamically Update SEO Title & Meta Description on Tab Switch
+    const newTitle = targetView.getAttribute('data-title');
+    const newDesc = targetView.getAttribute('data-desc');
+    if (newTitle) document.getElementById('meta-title').innerText = newTitle;
+    if (newDesc) document.getElementById('meta-desc').setAttribute('content', newDesc);
+
+    // Close mobile drawer upon selection
+    if (window.innerWidth <= 1024) {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('backdrop').classList.remove('active');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Fluid Calculation Engine Logic
+  const inputs = ['min-vw', 'max-vw', 'min-font', 'max-font'].map(id => document.getElementById(id));
+  const cssProperty = document.getElementById('css-property');
+  const sizeLabel = document.getElementById('size-label');
+  const outputCss = document.getElementById('output-css');
+  const outputTw = document.getElementById('output-tw');
+  
+  const previewText = document.getElementById('preview-text');
+  const previewLogo = document.getElementById('preview-logo');
+  const vwSlider = document.getElementById('vw-slider');
+  const currentVw = document.getElementById('current-vw');
+
+  function calculateClamp() {
+    const property = cssProperty.value;
+    const minVw = parseFloat(inputs[0].value) || 320;
+    const maxVw = parseFloat(inputs[1].value) || 1200;
+    const minFont = parseFloat(inputs[2].value) || 16;
+    const maxFont = parseFloat(inputs[3].value) || 48;
+    
+    const rootFont = 16;
+    
+    const slope = (maxFont - minFont) / (maxVw - minVw);
+    const yIntercept = minFont - (slope * minVw);
+    
+    const minRem = Number((minFont / rootFont).toFixed(4));
+    const maxRem = Number((maxFont / rootFont).toFixed(4));
+    
+    const slopeVw = Number((slope * 100).toFixed(4));
+    const interceptRem = Number((yIntercept / rootFont).toFixed(4));
+    
+    let preferred = `${interceptRem}rem + ${slopeVw}vw`;
+    if (interceptRem === 0) preferred = `${slopeVw}vw`;
+    if (interceptRem < 0) preferred = `${slopeVw}vw - ${Math.abs(interceptRem)}rem`;
+    
+    const clampFunction = `clamp(${minRem}rem, ${preferred}, ${maxRem}rem)`;
+    
+    outputCss.innerText = `${property}: ${clampFunction};`;
+    outputTw.innerText = `fluid: '${clampFunction}'`;
+    
+    updatePreview();
+  }
+
+  function updatePreview() {
+    const width = vwSlider.value;
+    const property = cssProperty.value;
+    currentVw.innerText = width + 'px';
+    
+    const minVw = parseFloat(inputs[0].value);
+    const maxVw = parseFloat(inputs[1].value);
+    const minFont = parseFloat(inputs[2].value);
+    const maxFont = parseFloat(inputs[3].value);
+    
+    let currentSize = minFont;
+    if (width >= maxVw) {
+      currentSize = maxFont;
+    } else if (width > minVw) {
+      const slope = (maxFont - minFont) / (maxVw - minVw);
+      currentSize = minFont + (slope * (width - minVw));
+    }
+    
+    if (property === 'font-size') {
+        previewLogo.style.display = 'none';
+        previewText.style.display = 'block';
+        previewText.style.fontSize = currentSize + 'px';
+    } else {
+        previewText.style.display = 'none';
+        previewLogo.style.display = 'flex';
+        
+        if(property === 'width') {
+            previewLogo.style.width = currentSize + 'px';
+            previewLogo.style.height = 'auto';
+        } else if (property === 'height') {
+            previewLogo.style.height = currentSize + 'px';
+            previewLogo.style.width = 'auto';
+        } else {
+            previewLogo.style.width = currentSize + 'px';
+            previewLogo.style.height = currentSize + 'px';
+        }
+    }
+  }
+
+  function copyCode(elementId, btnElement) {
+    const textToCopy = document.getElementById(elementId).innerText;
+    try {
+        navigator.clipboard.writeText(textToCopy);
+    } catch(err) {
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+    }
+    
+    const originalText = btnElement.innerText;
+    btnElement.innerText = 'Copied!';
+    setTimeout(() => btnElement.innerText = originalText, 2000);
+  }
+
+  inputs.forEach(input => input.addEventListener('input', calculateClamp));
+  cssProperty.addEventListener('change', calculateClamp);
+  vwSlider.addEventListener('input', updatePreview);
+  
+  calculateClamp();
+</script>
+</body>
+</html>
